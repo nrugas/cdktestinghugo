@@ -1,0 +1,92 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "static-site": {
+        "id": "static-site",
+        "path": "static-site",
+        "children": {
+          "staticsitebucket": {
+            "id": "staticsitebucket",
+            "path": "static-site/staticsitebucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "static-site/staticsitebucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketName": "cdkstatictut2020",
+                    "websiteConfiguration": {
+                      "indexDocument": "index.html"
+                    }
+                  }
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "static-site/staticsitebucket/Notifications"
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "static-site/staticsitebucket/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "static-site/staticsitebucket/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "staticsitebucketB1DB09B2"
+                        },
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "s3:GetObject",
+                              "Effect": "Allow",
+                              "Principal": "*",
+                              "Resource": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "staticsitebucketB1DB09B2",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/*"
+                                  ]
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "sitebucketname": {
+            "id": "sitebucketname",
+            "path": "static-site/sitebucketname"
+          },
+          "siteBucketWebsite": {
+            "id": "siteBucketWebsite",
+            "path": "static-site/siteBucketWebsite"
+          }
+        }
+      }
+    }
+  }
+}

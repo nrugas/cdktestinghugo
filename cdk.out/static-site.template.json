@@ -1,0 +1,68 @@
+{
+  "Resources": {
+    "staticsitebucketB1DB09B2": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "cdkstatictut2020",
+        "WebsiteConfiguration": {
+          "IndexDocument": "index.html"
+        }
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "static-site/staticsitebucket/Resource"
+      }
+    },
+    "staticsitebucketPolicyFEE77C4B": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "staticsitebucketB1DB09B2"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "staticsitebucketB1DB09B2",
+                        "Arn"
+                      ]
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "static-site/staticsitebucket/Policy/Resource"
+      }
+    }
+  },
+  "Outputs": {
+    "sitebucketname": {
+      "Value": {
+        "Ref": "staticsitebucketB1DB09B2"
+      }
+    },
+    "siteBucketWebsite": {
+      "Value": {
+        "Fn::GetAtt": [
+          "staticsitebucketB1DB09B2",
+          "WebsiteURL"
+        ]
+      }
+    }
+  }
+}
